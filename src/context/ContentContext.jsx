@@ -26,17 +26,24 @@ const faqDefault = [
   { id: 6, pergunta: 'Como faço para trocar ou devolver uma peça?', resposta: 'Pelas políticas de troca e devolução do próprio Mercado Livre, já que a compra é processada por lá.' },
 ]
 
+const destaqueDefault = {
+  modo: 'mais_vendidos',
+  productIds: [1, 2, 3, 4],
+}
+
 const defaultContent = {
   hero: heroDefault,
   story: storyDefault,
   products: productsDefault,
   faq: faqDefault,
+  destaque: destaqueDefault,
 }
 
 function mergeProducts(produtosSalvos) {
   return produtosSalvos.map((salvo) => {
     const original = productsDefault.find((p) => p.id === salvo.id)
-    return original ? { ...original, ...salvo } : salvo
+    const base = original ? { ...original, ...salvo } : salvo
+    return { images: [], ...base }
   })
 }
 
@@ -45,7 +52,12 @@ function loadContent() {
     const salvo = localStorage.getItem(STORAGE_KEY)
     if (salvo) {
       const parsed = JSON.parse(salvo)
-      return { ...parsed, products: mergeProducts(parsed.products) }
+      return {
+        ...defaultContent,
+        ...parsed,
+        products: mergeProducts(parsed.products || productsDefault),
+        destaque: parsed.destaque || defaultContent.destaque,
+      }
     }
   } catch (erro) {
     console.error('Não foi possível ler o conteúdo salvo:', erro)
@@ -59,7 +71,14 @@ export function ContentProvider({ children }) {
   const [content, setContent] = useState(loadContent)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(content))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(content))
+    } catch (erro) {
+      console.error(
+        'Não foi possível salvar as alterações — provavelmente o espaço do navegador encheu (muitas fotos). Tente remover alguma foto.',
+        erro
+      )
+    }
   }, [content])
 
   function updateHero(novoHero) {
@@ -68,6 +87,10 @@ export function ContentProvider({ children }) {
 
   function updateStory(novaStory) {
     setContent((atual) => ({ ...atual, story: novaStory }))
+  }
+
+  function updateDestaque(novoDestaque) {
+    setContent((atual) => ({ ...atual, destaque: novoDestaque }))
   }
 
   function addProduct(produto) {
@@ -90,6 +113,10 @@ export function ContentProvider({ children }) {
     setContent((atual) => ({
       ...atual,
       products: atual.products.filter((p) => p.id !== id),
+      destaque: {
+        ...atual.destaque,
+        productIds: atual.destaque.productIds.filter((pid) => pid !== id),
+      },
     }))
   }
 
@@ -122,6 +149,7 @@ export function ContentProvider({ children }) {
     ...content,
     updateHero,
     updateStory,
+    updateDestaque,
     addProduct,
     updateProduct,
     removeProduct,

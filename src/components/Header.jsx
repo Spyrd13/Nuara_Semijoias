@@ -9,8 +9,8 @@ function Header() {
       <nav className="wrap">
         <Link className="brand" to="/">Nüara Semijoias</Link>
         <div className="nav-links">
+          <Link to="/">Home</Link>
           <Link to="/colecao">Coleção</Link>
-          <a href="/#historia">Nossa história</a>
           <Link to="/faq">Perguntas Frequentes</Link>
         </div>
         <div className="nav-cta">

@@ -4,7 +4,7 @@
 const items = [
   { label: 'Compra segura', sub: 'Pagamento e envio via Mercado Livre' },
   { label: 'Rastreamento', sub: 'Acompanhe seu pedido na sua conta' },
-  { label: 'Feita à mão', sub: 'Peças selecionadas com cuidado' },
+  { label: 'Sob medida', sub: 'Peças selecionadas com cuidado' },
 ]
 
 function Trust() {

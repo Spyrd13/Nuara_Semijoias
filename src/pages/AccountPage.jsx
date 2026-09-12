@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useContent } from '../context/ContentContext'
 import AdminHero from './admin/AdminHero'
 import AdminStory from './admin/AdminStory'
+import AdminDestaques from './admin/AdminDestaques'
 import AdminProducts from './admin/AdminProducts'
 import AdminFaq from './admin/AdminFaq'
 
 const abas = [
   { value: 'hero', label: 'Home (banner)' },
+  { value: 'destaque', label: 'Destaques (top 5)' },
   { value: 'story', label: 'Nossa história' },
   { value: 'products', label: 'Produtos' },
   { value: 'faq', label: 'FAQ' },
@@ -50,6 +52,7 @@ function AdminPage() {
 
       <div className="admin-content">
         {abaAtiva === 'hero' && <AdminHero />}
+        {abaAtiva === 'destaque' && <AdminDestaques />}
         {abaAtiva === 'story' && <AdminStory />}
         {abaAtiva === 'products' && <AdminProducts />}
         {abaAtiva === 'faq' && <AdminFaq />}

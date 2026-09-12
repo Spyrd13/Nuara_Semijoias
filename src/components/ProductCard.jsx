@@ -10,10 +10,13 @@ import { Link } from 'react-router-dom'
 
 function ProductCard({ product }) {
   const precoFormatado = product.price.toFixed(2).replace('.', ',')
+  const temFoto = product.images && product.images.length > 0
 
   return (
     <Link className="card" to={`/produto/${product.id}`}>
-      <div className="placeholder card-ph">{product.icon}</div>
+      <div className="placeholder card-ph">
+        {temFoto ? <img src={product.images[0]} alt={product.name} /> : product.icon}
+      </div>
       <h3>{product.name}</h3>
       <div className="price">R$ {precoFormatado}</div>
     </Link>

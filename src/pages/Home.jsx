@@ -7,8 +7,16 @@ import ProductCard from '../components/ProductCard'
 import { useContent } from '../context/ContentContext'
 
 function Home() {
-  const { products } = useContent()
-  const destaques = products.slice(0, 4)
+  const { products, destaque } = useContent()
+
+  const destaques = products.filter((p) => destaque.productIds.includes(p.id))
+
+  const titulos = {
+    mais_vendidos: 'Mais vendidos',
+    menos_vendidos: 'Peças para descobrir',
+    personalizavel: 'Selecionados especialmente',
+  }
+  const titulo = titulos[destaque.modo] || 'Destaques'
 
   return (
     <>
@@ -16,8 +24,8 @@ function Home() {
 
       <section className="collection" id="colecao">
         <div className="section-head">
-          <h2>Destaques da coleção</h2>
-          <p>Uma seleção das peças mais amadas — veja a coleção completa para conhecer tudo.</p>
+          <h2>{titulo}</h2>
+          <p>Uma seleção especial — veja a coleção completa para conhecer tudo.</p>
         </div>
 
         <div className="wrap grid">

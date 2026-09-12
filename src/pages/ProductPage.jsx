@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useContent } from '../context/ContentContext'
@@ -7,6 +8,12 @@ function ProductPage() {
   const { addToCart } = useCart()
   const { products } = useContent()
   const product = products.find((p) => p.id === Number(id))
+
+  const [fotoAtiva, setFotoAtiva] = useState(0)
+
+  useEffect(() => {
+    setFotoAtiva(0)
+  }, [id])
 
   if (!product) {
     return (
@@ -18,13 +25,34 @@ function ProductPage() {
   }
 
   const precoFormatado = product.price.toFixed(2).replace('.', ',')
+  const fotos = product.images || []
+  const temFotos = fotos.length > 0
 
   return (
     <section className="product-page wrap">
       <Link className="back-link" to="/colecao">← Voltar para a coleção</Link>
 
       <div className="product-detail">
-        <div className="placeholder product-detail-ph">{product.icon}</div>
+        <div>
+          <div className="placeholder product-detail-ph">
+            {temFotos ? <img src={fotos[fotoAtiva]} alt={product.name} /> : product.icon}
+          </div>
+
+          {fotos.length > 1 && (
+            <div className="product-thumbs">
+              {fotos.map((src, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`product-thumb ${fotoAtiva === index ? 'active' : ''}`}
+                  onClick={() => setFotoAtiva(index)}
+                >
+                  <img src={src} alt={`${product.name} ${index + 1}`} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="product-detail-info">
           <span className="category-tag">{product.category}</span>
