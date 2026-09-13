@@ -13,8 +13,7 @@ function Header() {
           <Link to="/colecao">Coleção</Link>
           <Link to="/faq">Perguntas Frequentes</Link>
         </div>
-        <div className="nav-cta">
-          <Link className="icon-btn" to="/minha-conta">Minha conta</Link>
+          <div className="nav-cta">
           <button className="cart-btn" onClick={toggleCart}>
             Carrinho
             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}

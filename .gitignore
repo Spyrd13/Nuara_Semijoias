@@ -1,0 +1,21 @@
+# Dependências (reinstaláveis com "npm install", não precisam ir pro Git)
+node_modules/
+
+# Build de produção (gerado pelo "npm run build", também reinstalável)
+dist/
+
+# Variáveis de ambiente com dados sensíveis — NUNCA sobe pro Git
+.env
+.env.local
+.env.*.local
+
+# Arquivos de configuração de editores/sistema operacional
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -19,8 +19,22 @@ export function CartProvider({ children }) {
     setIsOpen(true)
   }
 
-  function removeFromCart(id) {
+    function removeFromCart(id) {
     setItems((atual) => atual.filter((item) => item.id !== id))
+  }
+
+  function increaseQuantity(id) {
+    setItems((atual) =>
+      atual.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+    )
+  }
+
+  function decreaseQuantity(id) {
+    setItems((atual) =>
+      atual
+        .map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
+        .filter((item) => item.quantity > 0)
+    )
   }
 
   function toggleCart() {
@@ -34,10 +48,12 @@ export function CartProvider({ children }) {
   const totalItems = items.reduce((soma, item) => soma + item.quantity, 0)
   const totalPrice = items.reduce((soma, item) => soma + item.price * item.quantity, 0)
 
-  const value = {
+   const value = {
     items,
     addToCart,
     removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
     isOpen,
     toggleCart,
     closeCart,

@@ -61,10 +61,9 @@ function ProductPage() {
           <p className="description">{product.description}</p>
 
           <div className="product-actions">
-            <button className="btn" onClick={() => addToCart(product)}>
+            <button className="btn btn-solid" onClick={() => addToCart(product)}>
               Adicionar ao carrinho
             </button>
-            <a className="btn btn-solid" href="#">Comprar no Mercado Livre</a>
           </div>
         </div>
       </div>
