@@ -5,21 +5,24 @@ import { CartProvider } from './context/CartContext'
 import { ContentProvider } from './context/ContentContext'
 import { CustomerProvider } from './context/CustomerContext'
 import { OrdersProvider } from './context/OrdersContext'
+import { SettingsProvider } from './context/SettingsContext'
 import App from './App.jsx'
 import './styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ContentProvider>
-        <CustomerProvider>
-          <OrdersProvider>
-            <CartProvider>
-              <App />
-            </CartProvider>
-          </OrdersProvider>
-        </CustomerProvider>
-      </ContentProvider>
+      <SettingsProvider>
+        <ContentProvider>
+          <CustomerProvider>
+            <OrdersProvider>
+              <CartProvider>
+                <App />
+              </CartProvider>
+            </OrdersProvider>
+          </CustomerProvider>
+        </ContentProvider>
+      </SettingsProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )

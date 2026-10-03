@@ -4,6 +4,7 @@ import AdminStory from './admin/AdminStory'
 import AdminProducts from './admin/AdminProducts'
 import AdminFaq from './admin/AdminFaq'
 import AdminOrders from './admin/AdminOrders'
+import AdminSettings from './admin/AdminSettings'
 
 const abas = [
   { value: 'hero', label: 'Home (banner)' },
@@ -11,6 +12,7 @@ const abas = [
   { value: 'products', label: 'Produtos' },
   { value: 'faq', label: 'FAQ' },
   { value: 'orders', label: 'Pedidos' },
+  { value: 'settings', label: 'Configurações' },
 ]
 
 function AdminPage() {
@@ -44,6 +46,7 @@ function AdminPage() {
         {abaAtiva === 'products' && <AdminProducts />}
         {abaAtiva === 'faq' && <AdminFaq />}
         {abaAtiva === 'orders' && <AdminOrders />}
+        {abaAtiva === 'settings' && <AdminSettings />}
       </div>
     </section>
   )

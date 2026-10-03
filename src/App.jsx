@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -8,8 +9,22 @@ import ProductPage from './pages/ProductPage'
 import AccountPage from './pages/AccountPage'
 import FAQPage from './pages/FAQPage'
 import AdminPage from './pages/AdminPage'
+import { useSettings } from './context/SettingsContext'
 
 function App() {
+  const { settings } = useSettings()
+
+  useEffect(() => {
+    if (!settings.favicon) return
+    let link = document.querySelector("link[rel~='icon']")
+    if (!link) {
+      link = document.createElement('link')
+      link.rel = 'icon'
+      document.head.appendChild(link)
+    }
+    link.href = settings.favicon
+  }, [settings.favicon])
+
   return (
     <>
       <Header />

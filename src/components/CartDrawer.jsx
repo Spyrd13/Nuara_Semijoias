@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { useCustomer } from '../context/CustomerContext'
 import { useOrders } from '../context/OrdersContext'
+import { useSettings } from '../context/SettingsContext'
 
 const NUMERO_WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMERO
 
-function montarMensagem(items, totalPrice) {
+function montarMensagem(items, totalPrice, introducao) {
   const linhas = items.map((item) => `${item.quantity}x ${item.name}`)
   const total = `Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`
-  return `Olá! Gostaria de comprar:\n${linhas.join('\n')}\n\n${total}`
+  return `${introducao}\n${linhas.join('\n')}\n\n${total}`
 }
 
 function DadosClienteForm({ onConfirmar, onCancelar }) {
@@ -45,6 +46,7 @@ function CartDrawer() {
   const { items, isOpen, closeCart, removeFromCart, increaseQuantity, decreaseQuantity, totalPrice } = useCart()
   const { customer, isLoggedIn, registerCustomer } = useCustomer()
   const { addOrder } = useOrders()
+  const { settings } = useSettings()
   const [mostrarForm, setMostrarForm] = useState(false)
 
   function concluirPedido(dadosCliente) {
@@ -53,7 +55,7 @@ function CartDrawer() {
       return
     }
     addOrder({ items, total: totalPrice, customer: dadosCliente })
-    const mensagem = montarMensagem(items, totalPrice)
+    const mensagem = montarMensagem(items, totalPrice, settings.mensagemPedidoIntro)
     const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensagem)}`
     window.open(url, '_blank')
     setMostrarForm(false)
