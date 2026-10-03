@@ -6,10 +6,12 @@ export function CartProvider({ children }) {
   const [items, setItems] = useState([])
   const [isOpen, setIsOpen] = useState(false)
 
-  function addToCart(product) {
+   function addToCart(product) {
+    if (product.stock <= 0) return
     setItems((atual) => {
       const jaExiste = atual.find((item) => item.id === product.id)
       if (jaExiste) {
+        if (jaExiste.quantity >= product.stock) return atual
         return atual.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         )
@@ -19,13 +21,15 @@ export function CartProvider({ children }) {
     setIsOpen(true)
   }
 
-    function removeFromCart(id) {
+  function removeFromCart(id) {
     setItems((atual) => atual.filter((item) => item.id !== id))
   }
 
   function increaseQuantity(id) {
     setItems((atual) =>
-      atual.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+      atual.map((item) =>
+        item.id === id && item.quantity < item.stock ? { ...item, quantity: item.quantity + 1 } : item
+      )
     )
   }
 

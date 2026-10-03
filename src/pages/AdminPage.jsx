@@ -3,12 +3,14 @@ import AdminHero from './admin/AdminHero'
 import AdminStory from './admin/AdminStory'
 import AdminProducts from './admin/AdminProducts'
 import AdminFaq from './admin/AdminFaq'
+import AdminOrders from './admin/AdminOrders'
 
 const abas = [
   { value: 'hero', label: 'Home (banner)' },
   { value: 'story', label: 'Nossa história' },
   { value: 'products', label: 'Produtos' },
   { value: 'faq', label: 'FAQ' },
+  { value: 'orders', label: 'Pedidos' },
 ]
 
 function AdminPage() {
@@ -41,6 +43,7 @@ function AdminPage() {
         {abaAtiva === 'story' && <AdminStory />}
         {abaAtiva === 'products' && <AdminProducts />}
         {abaAtiva === 'faq' && <AdminFaq />}
+        {abaAtiva === 'orders' && <AdminOrders />}
       </div>
     </section>
   )

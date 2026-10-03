@@ -9,7 +9,7 @@ import { useContent } from '../context/ContentContext'
 function Home() {
   const { products, destaque } = useContent()
 
-  const destaques = products.filter((p) => destaque.productIds.includes(p.id))
+  const destaques = products.filter((p) => destaque.productIds.includes(p.id) && p.stock > 0)
 
   const titulos = {
     mais_vendidos: 'Mais vendidos',

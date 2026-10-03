@@ -14,10 +14,9 @@ function CollectionPage() {
   const { products } = useContent()
   const [categoriaAtiva, setCategoriaAtiva] = useState('todos')
 
+  const disponiveis = products.filter((p) => p.stock > 0)
   const produtosFiltrados =
-    categoriaAtiva === 'todos'
-      ? products
-      : products.filter((product) => product.category === categoriaAtiva)
+    categoriaAtiva === 'todos' ? disponiveis : disponiveis.filter((p) => p.category === categoriaAtiva)
 
   return (
     <section className="collection" id="colecao-completa">

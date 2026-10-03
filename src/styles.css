@@ -206,6 +206,34 @@ nav.wrap { display:flex; align-items:center; justify-content:space-between; max-
 .cart-total { display:flex; justify-content:space-between; font-size:16px; margin-bottom:10px; }
 .cart-note { font-size:12px; color: var(--muted); margin-bottom:16px; }
 .cart-checkout { width:100%; text-align:center; border:none; cursor:pointer; }
+.checkout-form { display:flex; flex-direction:column; gap:12px; }
+.checkout-form-intro { color: var(--ink-soft); font-size:14px; margin-bottom:4px; }
+.checkout-form input {
+  padding:11px 14px; border-radius:8px; border:1px solid rgba(58,27,46,0.2);
+  font-family:'Lora', serif; font-size:14px; background:#fff; color: var(--ink);
+}
+.checkout-form-checkbox { display:flex; align-items:center; gap:8px; font-size:13px; color: var(--ink-soft); }
+.checkout-form-actions { display:flex; gap:12px; margin-top:6px; }
+.checkout-form-actions .btn { flex:1; text-align:center; }
+
+/* ---------- Pedidos no admin ---------- */
+.admin-empty { color: var(--ink-soft); font-style:italic; }
+.admin-order-list { display:flex; flex-direction:column; gap:14px; margin-bottom:24px; }
+.admin-order-card {
+  background:#fff; border:1px solid rgba(58,27,46,0.1); border-radius:14px; padding:16px;
+}
+.admin-order-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.admin-order-phone { color: var(--muted); font-size:13px; }
+.admin-order-status {
+  font-size:11px; text-transform:uppercase; letter-spacing:0.04em; padding:4px 10px; border-radius:999px;
+  background: var(--bg-soft); color: var(--wine); white-space:nowrap;
+}
+.admin-order-status.status-aprovado { background:#DCEFDD; color:#2F6B34; }
+.admin-order-status.status-recusado { background:#F3D8D8; color:#8A2E2E; }
+.admin-order-items { list-style:none; color: var(--ink-soft); font-size:14px; margin-bottom:10px; }
+.admin-order-footer { display:flex; justify-content:space-between; font-size:13px; color: var(--muted); margin-bottom:10px; }
+.admin-order-actions { display:flex; gap:12px; }
+.admin-order-actions .btn { flex:1; text-align:center; padding:9px 0; font-size:13px; }
 
 /* ---------- Minha conta ---------- */
 .account-page { padding:70px 6% 100px; max-width:640px; }
