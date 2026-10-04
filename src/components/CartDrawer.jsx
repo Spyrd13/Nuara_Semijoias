@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext'
 import { useCustomer } from '../context/CustomerContext'
 import { useOrders } from '../context/OrdersContext'
 import { useSettings } from '../context/SettingsContext'
+import CustomerForm from './CustomerForm'
 
 const NUMERO_WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMERO
 
@@ -10,36 +11,6 @@ function montarMensagem(items, totalPrice, introducao) {
   const linhas = items.map((item) => `${item.quantity}x ${item.name}`)
   const total = `Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`
   return `${introducao}\n${linhas.join('\n')}\n\n${total}`
-}
-
-function DadosClienteForm({ onConfirmar, onCancelar }) {
-  const [nome, setNome] = useState('')
-  const [sobrenome, setSobrenome] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [salvar, setSalvar] = useState(true)
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    if (!nome || !telefone) return
-    onConfirmar({ nome, sobrenome, telefone, salvar })
-  }
-
-  return (
-    <form className="checkout-form" onSubmit={handleSubmit}>
-      <p className="checkout-form-intro">Pra gente confirmar seu pedido, preenche rapidinho:</p>
-      <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" required />
-      <input value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} placeholder="Sobrenome" />
-      <input value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="Seu telefone (com DDD)" required />
-      <label className="checkout-form-checkbox">
-        <input type="checkbox" checked={salvar} onChange={(e) => setSalvar(e.target.checked)} />
-        Salvar meus dados pra próximas compras
-      </label>
-      <div className="checkout-form-actions">
-        <button type="button" className="btn" onClick={onCancelar}>Voltar</button>
-        <button type="submit" className="btn btn-solid">Confirmar e ir pro WhatsApp</button>
-      </div>
-    </form>
-  )
 }
 
 function CartDrawer() {
@@ -87,7 +58,12 @@ function CartDrawer() {
         {items.length === 0 ? (
           <p className="cart-empty">Seu carrinho está vazio.</p>
         ) : mostrarForm ? (
-          <DadosClienteForm onConfirmar={handleConfirmarForm} onCancelar={() => setMostrarForm(false)} />
+          <CustomerForm
+            onConfirmar={handleConfirmarForm}
+            onCancelar={() => setMostrarForm(false)}
+            textoIntroducao="Pra gente confirmar seu pedido, preenche rapidinho:"
+            textoBotao="Confirmar e ir pro WhatsApp"
+          />
         ) : (
           <>
             <p className="cart-shipping-note">

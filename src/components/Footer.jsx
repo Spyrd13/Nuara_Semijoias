@@ -19,6 +19,7 @@ function Footer() {
           <h4>Loja</h4>
           <Link to="/colecao">Coleção</Link>
           <a href="/#historia">Nossa história</a>
+          <Link to="/minha-conta">Minha conta</Link>
         </div>
         <div className="footer-col">
           <h4>Ajuda</h4>

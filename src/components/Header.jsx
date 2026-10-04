@@ -17,6 +17,7 @@ function Header() {
           <a href="/#historia">Nossa história</a>
         </div>
         <div className="nav-cta">
+          <Link className="icon-btn" to="/minha-conta">Minha conta</Link>
           <button className="cart-btn" onClick={toggleCart}>
             Carrinho
             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}

@@ -244,6 +244,8 @@ nav.wrap { display:flex; align-items:center; justify-content:space-between; max-
 }
 .account-intro { color: var(--ink-soft); margin-bottom:30px; }
 .account-placeholder { background: var(--bg-soft); border-radius:16px; padding:30px; color: var(--ink-soft); font-style:italic; }
+.account-header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:30px; }
+.account-header .account-intro { margin-bottom:0; }
 
 /* ---------- FAQ ---------- */
 .faq-page { padding:70px 6% 110px; }
