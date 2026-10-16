@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { getPrecoEfetivo, estaEmPromocao, formatarPreco } from '../utils/pricing'
 
 function ProductCard({ product }) {
   const { addToCart } = useCart()
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const precoFormatado = product.price.toFixed(2).replace('.', ',')
+  const precoFormatado = formatarPreco(getPrecoEfetivo(product))
   const fotos = product.images || []
   const temFotos = fotos.length > 0
   const temVariasFotos = fotos.length > 1
@@ -63,7 +64,10 @@ function ProductCard({ product }) {
 
       <h3>{product.name}</h3>
       <div className="card-bottom-row">
-        <div className="price">R$ {precoFormatado}</div>
+        <div className="price">
+          {estaEmPromocao(product) && <span className="price-old">R$ {formatarPreco(product.price)}</span>}
+          R$ {precoFormatado}
+        </div>
          <button
           type="button"
           className="card-add-btn"

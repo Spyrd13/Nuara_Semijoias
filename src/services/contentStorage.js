@@ -23,11 +23,16 @@ function migrate(content) {
   return { ...resultado, version: CURRENT_VERSION }
 }
 
+const CAMPOS_PRODUTO_PADRAO = {
+  images: [], sku: '', precoPromocional: null, ativo: true, tags: [],
+  material: '', tipoBanho: '', medidas: '', garantia: '',
+}
+
 function mergeProducts(produtosSalvos) {
   return produtosSalvos.map((salvo) => {
     const original = productsDefault.find((p) => p.id === salvo.id)
     const base = original ? { ...original, ...salvo } : salvo
-    return { images: [], ...base }
+    return { ...CAMPOS_PRODUTO_PADRAO, ...base }
   })
 }
 
@@ -47,7 +52,7 @@ export function loadContent() {
   } catch (erro) {
     console.error('Não foi possível ler o conteúdo salvo:', erro)
   }
-  return { ...defaultContent, version: CURRENT_VERSION }
+   return { ...defaultContent, products: mergeProducts(defaultContent.products), version: CURRENT_VERSION }
 }
 
 export function saveContent(content) {

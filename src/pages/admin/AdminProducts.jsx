@@ -58,16 +58,49 @@ function FotosField({ images, onChange }) {
   )
 }
 
+function parseTags(texto) {
+  return String(texto || '').split(',').map((t) => t.trim()).filter(Boolean)
+}
+
+function CamposExtras({ form, onChange }) {
+  return (
+    <>
+      <div className="admin-product-row3">
+        <input value={form.sku || ''} onChange={(e) => onChange('sku', e.target.value)} placeholder="SKU" />
+        <input
+          type="number" step="0.01"
+          value={form.precoPromocional ?? ''}
+          onChange={(e) => onChange('precoPromocional', e.target.value === '' ? null : Number(e.target.value))}
+          placeholder="Preço promocional"
+        />
+        <label className="admin-ativo">
+          <input type="checkbox" checked={form.ativo !== false} onChange={(e) => onChange('ativo', e.target.checked)} />
+          Ativo
+        </label>
+      </div>
+      <div className="admin-product-row2">
+        <input value={form.material || ''} onChange={(e) => onChange('material', e.target.value)} placeholder="Material" />
+        <input value={form.tipoBanho || ''} onChange={(e) => onChange('tipoBanho', e.target.value)} placeholder="Tipo de banho" />
+      </div>
+      <div className="admin-product-row2">
+        <input value={form.medidas || ''} onChange={(e) => onChange('medidas', e.target.value)} placeholder="Medidas" />
+        <input value={form.garantia || ''} onChange={(e) => onChange('garantia', e.target.value)} placeholder="Garantia" />
+      </div>
+      <input value={form.tags || ''} onChange={(e) => onChange('tags', e.target.value)} placeholder="Tags (separadas por vírgula)" />
+    </>
+  )
+}
+
 function AdminProductRow({ product }) {
   const { updateProduct, removeProduct } = useContent()
-  const [form, setForm] = useState({ ...product, images: product.images || [] })
+  const [form, setForm] = useState({ ...product, images: product.images || [], tags: (product.tags || []).join(', ') })
 
   function handleChange(campo, valor) {
     setForm((atual) => ({ ...atual, [campo]: valor }))
   }
 
   function handleSave() {
-    updateProduct(product.id, form)
+    updateProduct(product.id, { ...form, tags: parseTags(form.tags) })
   }
 
   return (
@@ -97,6 +130,7 @@ function AdminProductRow({ product }) {
         />
       </div>
 
+      <CamposExtras form={form} onChange={handleChange} />
       <FotosField images={form.images} onChange={(images) => handleChange('images', images)} />
 
       <textarea
@@ -117,9 +151,7 @@ function AdminProductRow({ product }) {
 
 function AdminNewProduct() {
   const { addProduct } = useContent()
-  const [form, setForm] = useState({
-    name: '', price: '', category: 'colar', stock: '', description: '', images: [],
-  })
+  const [form, setForm] = useState({ name: '', price: '', category: 'colar', stock: '', description: '', images: [], tags: '' })
 
   function handleChange(campo, valor) {
     setForm((atual) => ({ ...atual, [campo]: valor }))
@@ -128,8 +160,8 @@ function AdminNewProduct() {
   function handleSubmit(event) {
     event.preventDefault()
     if (!form.name || !form.price) return
-    addProduct({ ...form, price: Number(form.price), stock: Number(form.stock) || 0 })
-    setForm({ name: '', price: '', category: 'colar', stock: '', description: '', images: [] })
+    addProduct({ ...form, price: Number(form.price), stock: Number(form.stock) || 0, tags: parseTags(form.tags), ativo: form.ativo !== false })
+    setForm({ name: '', price: '', category: 'colar', stock: '', description: '', images: [], tags: '' })
   }
 
   return (
@@ -146,6 +178,7 @@ function AdminNewProduct() {
         <input className="admin-stock-input" type="number" value={form.stock} onChange={(e) => handleChange('stock', e.target.value)} placeholder="Estoque" />
       </div>
 
+      <CamposExtras form={form} onChange={handleChange} />
       <FotosField images={form.images} onChange={(images) => handleChange('images', images)} />
 
       <textarea

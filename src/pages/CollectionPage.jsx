@@ -14,7 +14,7 @@ function CollectionPage() {
   const { products } = useContent()
   const [categoriaAtiva, setCategoriaAtiva] = useState('todos')
 
-  const disponiveis = products.filter((p) => p.stock > 0)
+  const disponiveis = products.filter((p) => p.stock > 0 && p.ativo !== false)
   const produtosFiltrados =
     categoriaAtiva === 'todos' ? disponiveis : disponiveis.filter((p) => p.category === categoriaAtiva)
 

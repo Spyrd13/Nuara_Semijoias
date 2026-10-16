@@ -403,7 +403,15 @@ footer { background: var(--ink); color: #EFDDE3; padding: 60px 6% 30px; }
 .admin-faq-actions { display:flex; gap:12px; }
 .admin-new-product, .admin-new-faq { background: var(--bg-soft); }
 
+.price-old { text-decoration: line-through; margin-right:8px; opacity:.6; font-size:.9em; }
+.product-specs { list-style:none; color: var(--ink-soft); font-size:14px; margin-bottom:20px; display:flex; flex-direction:column; gap:4px; }
+.product-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+.admin-product-row3 { display:grid; grid-template-columns: 1fr 1fr auto; gap:10px; align-items:center; }
+.admin-ativo { display:flex; align-items:center; gap:6px; font-size:13px; color: var(--ink-soft); }
+.admin-ativo input { padding:0; }
+
 @media (max-width: 860px) {
+  .admin-product-row3 { grid-template-columns: 1fr; }
   .hero { grid-template-columns:1fr; }
   .hero-visual { max-width:320px; margin:0 auto; }
   .grid { grid-template-columns: repeat(2, 1fr); }
