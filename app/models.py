@@ -33,3 +33,14 @@ class ProductRead(ProductBase):
     id: int
     tags: list[str] = []
     images: list[str] = []
+
+class AdminUser(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(index=True, unique=True)
+    # Nunca a senha em si: só o "hash" (impossível de reverter).
+    password_hash: str
+
+
+class Token(SQLModel):
+    access_token: str
+    token_type: str = "bearer"    

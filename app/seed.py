@@ -1,6 +1,8 @@
 from sqlmodel import Session, select
 
-from .models import Product
+from .config import ADMIN_EMAIL, ADMIN_PASSWORD
+from .models import AdminUser, Product
+from .security import hash_password
 
 # Mesmos 8 produtos de teste do frontend (src/data/products.js).
 PRODUTOS_INICIAIS = [
