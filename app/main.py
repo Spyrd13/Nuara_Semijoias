@@ -2,11 +2,14 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlmodel import Session
 
-from .config import CORS_ORIGINS, validate_config
+import os
+
+from .config import CORS_ORIGINS, UPLOAD_DIR, validate_config
 from .db import create_db_and_tables, engine
-from .routers import auth, products
+from .routers import admin_orders, admin_products, auth, orders, products
 from .seed import seed_admin, seed_products
 
 
@@ -32,6 +35,13 @@ app.add_middleware(
 
 app.include_router(products.router)
 app.include_router(auth.router)
+app.include_router(admin_products.router)
+app.include_router(orders.router)
+app.include_router(admin_orders.router)
+
+# Entrega as fotos em /uploads/<arquivo>. A pasta é criada se não existir.
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 
 @app.get("/health")

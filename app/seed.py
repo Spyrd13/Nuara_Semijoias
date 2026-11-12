@@ -32,3 +32,17 @@ def seed_products(session: Session) -> None:
     for dados in PRODUTOS_INICIAIS:
         session.add(Product(**dados))
     session.commit()
+
+
+def seed_admin(session: Session) -> None:
+    # Só cria o primeiro admin se ainda não existir nenhum no banco.
+    # Depois de criado, o ADMIN_PASSWORD do .env deixa de ser usado
+    # (pode e deve ser apagado de lá).
+    if session.exec(select(AdminUser)).first():
+        return
+    if not ADMIN_EMAIL or not ADMIN_PASSWORD:
+        print("AVISO: nenhum admin no banco e ADMIN_EMAIL/ADMIN_PASSWORD não "
+              "definidos no .env — o painel admin ficará inacessível.")
+        return
+    session.add(AdminUser(email=ADMIN_EMAIL, password_hash=hash_password(ADMIN_PASSWORD)))
+    session.commit()

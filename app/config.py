@@ -11,6 +11,11 @@ CORS_ORIGINS = [
     if origem.strip()
 ]
 
+# Fotos dos produtos. Em produção, aponte UPLOADS_DIR para um disco persistente.
+UPLOAD_DIR = os.getenv("UPLOADS_DIR", "uploads")
+MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "5"))
+MAX_IMAGES_PER_PRODUCT = 8
+
 JWT_SECRET = os.getenv("JWT_SECRET", "")
 JWT_EXPIRE_MINUTES = int(os.getenv("JWT_EXPIRE_MINUTES", "480"))
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "").strip().lower()
